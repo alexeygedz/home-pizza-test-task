@@ -6,7 +6,7 @@ $data = '{
   "loan": {
   "base": 8000,
   "date": "2018-07-27 10:20:37",
-  "percent": 0.02,
+  "percent": 2,
   "duration": 30
 },
 "payments": [
@@ -19,6 +19,7 @@ $data = '{
 
 $credit = new Credit();
 print_r($credit->calculationDebt($data));
+echo "\n";
 
 
 

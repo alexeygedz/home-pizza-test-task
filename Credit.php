@@ -34,7 +34,8 @@ class Credit
         $this->datePayment = $this->receivingDate;
     }
 
-    public function getIndebtedness(): float {
+    public function getIndebtedness(): float
+    {
         foreach ($this->payments as $paymant) {
             if ($this->atDate >= $paymant->date) {
                 $days = $this->countDaysBetweenDates($this->datePayment, $paymant->date);
@@ -49,7 +50,13 @@ class Credit
                 $this->datePayment = $paymant->date;
             }
         }
-        return $this->sumCredit + $this->interestCredit;
+        $days = $this->countDaysBetweenDates($this->atDate, $this->datePayment);
+        $percentDays = $this->interestRate * ($days + 1);
+
+        $this->interestCredit = round($this->sumCredit / 100 * $percentDays, 2);
+        $this->interestCredit = $this->checkExcessPercentage($this->interestCredit);
+
+        return doubleval($this->sumCredit) + $this->interestCredit;
     }
 
     public function countDaysBetweenDates($date1, $date2): int {
